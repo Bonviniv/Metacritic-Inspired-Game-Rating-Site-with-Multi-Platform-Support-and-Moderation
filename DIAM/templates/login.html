@@ -1,0 +1,116 @@
+{% extends "paginaInicial.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css "/>
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/login.css' %}?{% now "U" %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title_page %}Login{% endblock %}</title>
+</head>
+{% block estilos %}{% endblock %}
+<body>
+
+    {% block login_btn %}{% endblock %}
+    {% block registar_btn %}{% endblock %}
+     
+    {% block content %}
+    <!-- --------------------------------------formulario de login-------------------------------------------------- -->
+
+    <div class="modal-box">
+        <div class="slider"></div>
+        <div class="btn">
+            <button class="login"><strong>Login</strong></button>
+            <button class="signup"><strong>Signup</strong></button>
+        </div>
+
+        <!-- Form section that contains the
+             login and the signup form -->
+        <div class="form-section">
+
+            <!-- login form -->
+            <form class="formulario form-log" action= "{% url 'login_site'  %}" method= "post">
+                {% csrf_token %}
+            <div class="imgagem-gif">
+                <img src="{% static 'site_app/images/pac.gif' %}" alt="gif" id="pac" width="350px" height="100px" style="margin-bottom: 2em">
+            </div>
+                <div class="usuario">
+                    <label for="username">Username: </label>
+                    <input id="username" type="text" name="username" id="username" size="20">
+                </div>
+                <div class="pass">
+                    <label for="password">Password: </label>
+                    <input id="password" type="password" name="password" id="password" size="20" style="margin-bottom: 2em">
+                </div>
+
+                  {% if error_message %}
+                    <p style="color: red; font-size: small">{{ error_message }}</p>
+                  {%  endif %}
+                <input id="autenticar" type="submit" value="Autenticar">
+
+            </form>
+
+            <!-- signup form -->
+            <form class="formulario form-sign" action= "{% url 'login_site'  %}" method= "post">
+                    {% csrf_token %}
+
+                  <div class="nome">
+                    <label for="username">Nome: </label>
+                    <input type="text" name="username" id="username" size="20">
+                  </div>
+
+                  <div class="email">
+                    <label for="email">Email: </label>
+                    <input type="email" name="email" id="email" size="20">
+                  </div>
+
+                  <div class="pass">
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" id="password" size="20">
+                  </div>
+
+                  <div class="data">
+                    <label for="dataNascimento">Data de Nascimento: </label>
+                    <input type="date" name="dataNascimento" id="dataNascimento" size="20">
+                  </div>
+
+                  <div class="empresa">
+                    <label for="empresa">Empresa: </label>
+                    <input type="text" name="empresa" id="empresa" size="20" style="padding-left: 0.5em">
+                  </div>
+
+                  <div class="critico">
+                    <label for="e_critico">Crítico?</label>
+                    <label for="sim">Sim:</label>
+                    <input type="radio" name="opcao" id="op1" value="sim" size="20">
+                    <label for="nao">Não:</label>
+                    <input type="radio" name="opcao" id="op2" value="nao" size="20">
+                  </div>
+
+                      {% if error_message %}
+                        <p style="color: red"><strong>{{ error_message }}</strong></p>
+                      {%  endif %}
+
+                    <input formaction="{% url 'registar' %}" id="registar" type="submit" value="Registar">
+
+                  </form>
+        </div>
+    </div>
+    <script src="{% static 'site_app/scripts/signup.js' %}"></script>
+    {% endblock %}
+
+    <!-- --------------------------------------------background----------------------------------------------------- -->
+
+    <div>
+     <div class="wave"></div>
+     <div class="wave"></div>
+     <div class="wave"></div>
+    </div>
+
+    {% block footer %}
+    {% endblock %}
+
+</body>
+</html>

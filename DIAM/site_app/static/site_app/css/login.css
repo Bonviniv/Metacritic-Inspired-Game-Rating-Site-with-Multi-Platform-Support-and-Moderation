@@ -1,0 +1,274 @@
+body {
+    margin: auto;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: auto;
+    background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.wave {
+    background: rgb(255 255 255 / 25%);
+    border-radius: 1000% 1000% 0 0;
+    position: fixed;
+    width: 200%;
+    height: 12em;
+    animation: wave 10s -3s linear infinite;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.8;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.wave:nth-of-type(2) {
+    bottom: -1.25em;
+    animation: wave 18s linear reverse infinite;
+    opacity: 0.8;
+}
+
+.wave:nth-of-type(3) {
+    bottom: -2.5em;
+    animation: wave 20s -1s reverse infinite;
+    opacity: 0.9;
+}
+
+@keyframes wave {
+    2% {
+        transform: translateX(1%);
+    }
+
+    25% {
+        transform: translateX(-25%);
+    }
+
+    50% {
+        transform: translateX(-50%);
+    }
+
+    75% {
+        transform: translateX(-25%);
+    }
+
+    100% {
+        transform: translateX(1%);
+    }
+}
+
+/*------------------------------------------------------------------------------------*/
+
+.modal-box {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 23em;
+  width: 100%;
+  max-height: 30em;
+  height: 100%;
+  padding: 30px 20px;
+  border-radius: 24px;
+  background-color: #fff;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%) scale(1);
+  overflow: hidden;
+}
+
+.modal-box i {
+  font-size: 70px;
+  color: #4070f4;
+}
+.modal-box h2 {
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: 500;
+  color: #333;
+}
+.modal-box h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+  text-align: center;
+}
+.modal-box .buttons {
+  margin-top: 25px;
+}
+.modal-box button {
+  font-size: 17px;
+  padding: 6px 12px;
+  margin: 0 10px;
+}
+
+.formulario {
+  padding-top: 1.3em;
+  text-align: -webkit-center;
+    height: 100%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 40px;
+}
+
+.usuario {
+  padding-bottom: 1em;
+}
+
+.email{
+    padding-bottom: 1em;
+}
+
+.nome {
+  padding-bottom: 1em;
+}
+
+.pass {
+  padding-bottom: 1em;
+}
+
+.data {
+  padding-bottom: 1em;
+}
+
+.empresa {
+  padding-bottom: 1em;
+}
+
+.critico {
+  padding-bottom: 1em;
+}
+
+#username {
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+}
+
+#email {
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+}
+
+#password {
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+}
+
+#autenticar {
+  margin-top: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+
+    height: 3em;
+    width: 10em;
+    box-shadow: 5px 5px 15px rgb(223, 188, 254);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: none;
+    background-color: white;
+}
+
+
+#autenticar:hover {
+    color: white;
+    background-color: rgb(132, 0, 255);
+}
+
+#registar {
+  margin-top: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+
+    height: 3em;
+    width: 10em;
+    box-shadow: 5px 5px 15px rgb(223, 188, 254);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: none;
+    background-color: white;
+}
+
+
+#registar:hover {
+    color: white;
+    background-color: rgb(132, 0, 255);
+}
+
+.btn {
+    height: 5em;
+    width: 17em;
+    box-shadow: 10px 10px 30px rgb(223, 188, 254);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login,
+.signup {
+    font-size: 22px;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.slider {
+    height: 3em;
+    width: 8em;
+    border-radius: 50px;
+    background-image: linear-gradient(to right,
+            rgb(175, 110, 255),
+            rgb(107, 91, 255));
+    position: absolute;
+    top: 2.1em;
+    left: 15%;
+    transition: all 0.5s ease-in-out;
+}
+
+.moveslider {
+    left: 50%;
+}
+
+.form-section {
+    height: 500px;
+    top:6%;
+    width: 1000px;
+    padding: 20px 0;
+    display: flex;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    left: 75%;
+}
+
+.form-section-move {
+    left: -76%;
+}

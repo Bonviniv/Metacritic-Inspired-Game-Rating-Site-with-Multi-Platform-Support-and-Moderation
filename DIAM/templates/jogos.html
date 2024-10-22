@@ -1,0 +1,208 @@
+{% extends "paginaInicial.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/jogos.css' %}?{% now "U" %}">
+
+    <title>{% block title_page %}Jogos{% endblock %}</title>
+</head>
+{% block estilos %}{% endblock %}
+<body >
+
+    {% block content %}
+
+    <div class="jogos-div">
+        <div class="jogos-title">
+            <h1>Jogos</h1>
+            {% if request.user.is_authenticated %}
+                {% if is_admin %}
+                <div class="adicionar" style="align-items: center; padding-top: 1.35%;">
+                    <input type="image" onclick="showPopUp()" id="addJogo" alt="Adicionar Jogo" src="{% static 'site_app/images/mais.png' %}" width="40px" height="40px"/>
+                </div>
+                 {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="popUp" id="popUp">
+            <div onclick="hidePopUp()" class="popUp_mask"></div>
+            <div class="popUp_conteudo">
+                <section class="form-section-jogo">
+                    <div class="modal-box-jogo" style="height: 95%;">
+                        <h1 style="padding-bottom: 3%">Adicionar Novo Jogo</h1>
+
+                        <form class="form-jogo" action= "{% url 'gravarJogo' %}" method= "post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="info-boxes">
+                                <div id="nomeJogo">
+                                    <label for="nome">Nome do Jogo: </label>
+                                    <input type="text" name="nome" id="nome" size="20">
+                                </div>
+
+                                <div class="empresaJogo">
+                                    <label for="empresa">Empresa: </label>
+                                    <input type="text" name="empresa" id="empresa" size="20">
+                                </div>
+                            </div>
+
+                            <div class="info-boxes">
+                                <div id="genero">
+                                    <label for="genero">Género: </label>
+                                    <input type="text" name="genero" size="20">
+                                </div>
+
+                                <div id="plataformaJogo">
+                                    <label for="plataforma">Plataformas:</label>
+                                    <div id="plataformas">
+                                        <label for="ps5">PS5</label>
+                                        <input type="checkbox" name="opcao" id="op1" value="PS5" size="20">
+                                        <label for="xbox" style="padding-left: 8%">Xbox</label>
+                                        <input type="checkbox" name="opcao" id="op2" value="XBOX" size="20">
+                                        <label for="pc" style="padding-left: 8%">PC</label>
+                                        <input type="checkbox" name="opcao" id="op2" value="PC" size="20">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <label for="dataLancamento" style="padding-left: 15%;padding-right: 8%;">Data de Lançamento: </label>
+                            <input type="date" name="dataLancamento" id="dataLancamento" size="40">
+
+                            <div class="info-boxes" style="padding-top: 10%">
+                                <div class="descricaoJogo">
+                                    <label for="descricao">Descrição: </label>
+                                    <textarea id="review" type="text" name="descricao" rows="4" cols="54" style="padding-left: 0.2em"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="medias">
+                                <div class="imagem">
+                                    <label for="imagem">Imagem: </label>
+                                    <input id="imagem" type="file" name="imagem">
+                                </div>
+
+                                <div class="video">
+                                    <label for="video">Link do video:</label>
+                                    <input type="text" name="video" id="video" size="51">
+                                </div>
+                            </div>
+
+                            {% if error_message %}
+                                <p style="color: red"><strong>{{ error_message }}</strong></p>
+                            {%  endif %}
+
+                            <input type="submit" id="criar" value="Submeter">
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    <div class="jogos-main-content">
+            <aside class="jogos-search">
+              <div class="search-bar">
+                    <form action= "{% url 'jogos_view_filtrado_pesquisar'  %}" method= "post" style="display: flex">
+                        {% csrf_token %}
+                        <input type="text" name="pesquisar" id="pesquisar">
+                        <button class="lupa" type="submit" value="Reset">
+                            <img src="{% static 'site_app/images/lupa.png' %}" alt="pesquisar" border="0" width="25px" height="25px">
+                        </button>
+                    </form>
+                </div>
+                <div class="jogos-search-title">
+                    <h1>Filtros</h1>
+                </div>
+                
+                
+                 <form class="form-pesquisa" action= "{% url 'jogos_view_filtrado'  %}" method= "post" >
+                    {% csrf_token %}
+                <div class="filtro-ano-lancamento">
+                    <h3>Ano de Lançamento</h3>
+                   
+                    <div class="year-range">
+                        <div class="min-year">
+                            <p class="label-year">De: </p>
+                            <input type="number" class="year" name ="min_year" id="min_year">
+                        </div>
+                        <div class="max-year">
+                            <p class="label-year">Até: </p>
+                            <input type="number" class="year" name ="max_year" id="max_year">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filtro-platformas" style="height: 25%;">
+                    <h3>Plataformas</h3>
+                    <input type="checkbox" name="opcao" id="op1" value="PS5">
+                    <label for="ps5">PS5</label><br>
+                    <input type="checkbox" name="opcao" id="op2" value="XBOX">
+                    <label for="xbox">Xbox</label><br>
+                    <input type="checkbox" name="opcao" id="op3" value="PC">
+                    <label for="pc">PC</label>
+                </div>
+                <div class="filtro-genero" style="height: 25%;">
+                    <h3>Gênero</h3>
+                    {% for gen in gens %}
+                        <input type="checkbox" name="opcaoG" id="opc1" value="{{ gen }}">
+                        <label for="{{ gen }}">{{ gen }}</label><br>
+                    {% endfor %}
+                </div>
+
+                <div class="buttons_filters" >
+                    <button type="submit" value="Submit" id="submit" >Submit</button>
+                    <button type="reset" value="Reset" id="reset" >Reset</button>
+                </div>
+                 </form>
+            </aside>
+
+            <div class="jogos-grid-main">
+
+                <div class="jogos-grid">
+                    {% for game in lista_jogos %}
+                    <div onclick='window.location.replace("{% url 'jogo' game.id %}")' class="jogo-card">
+                            
+                        <div class="jogo-img">
+                            <img  src="{% static game.imagem_jogo %}" alt="jogo img" width="100%" height="100%">
+                        </div>
+
+                        <div class="jogo-card-title">
+                            <h3 title="{{ game.nome }}">{{ game.nome }}</h3>
+                        </div>
+
+                        <div class="jogo-card-rating">
+                            <div class="jogo-rating_c-icon">
+                                <p><b>{{ game.rating_c }}</b></p>
+                            </div>
+                            <div class="jogo-rating_u-icon">
+                                <p><b>{{ game.rating_u }}</b></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    <script>
+        function showPopUp(){
+            let divInfo=document.getElementById("popUp");
+            divInfo.style.display = "flex";
+        }
+        
+        function hidePopUp(){
+            let divInfo=document.getElementById("popUp");
+            divInfo.style.display = "none";  
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>

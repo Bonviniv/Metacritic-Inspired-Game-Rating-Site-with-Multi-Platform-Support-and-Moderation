@@ -1,0 +1,378 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap");
+:root {
+    /*declaracao das variaveis que vão ser uadas no css*/
+  --primary: #eeeeee;
+  --secondary: #227c70;
+  --green: #82cd47;
+  --secondary-light: rgb(34, 124, 112, 0.2);
+  --secondary-light-2: rgb(127, 183, 126, 0.1);
+  --white: #fff;
+  --black: #393e46;
+
+  --shadow: 0px 2px 8px 0px var(--secondary-light);
+}
+
+* {
+  list-style-type: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  /*height: 175vh;*/
+  width: 100%;
+  background-color: black;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  background-color: var(--white);
+  padding: 0 6%;
+  box-shadow: var(--shadow);
+}
+
+.navbar-logo {
+  cursor: pointer;
+    width: 150px;
+    height: 50px;
+}
+
+.menu-list {
+  width: 100%;
+  text-align: right;
+  padding-right: 2rem;
+}
+
+.menu-list li {
+  display: inline-block;
+  margin: 0 1rem;
+}
+
+.menu-list li a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--black);
+  text-decoration: none;
+}
+
+/*------------ Nova barra de perfil -------------------------------------------*/
+.profile-dropdown {
+  position: relative;
+  width: fit-content;
+}
+
+.profile-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 200px;
+  /*border-radius: 50px;*/
+  color: var(--black);
+  /* background-color: white;
+  box-shadow: var(--shadow); */
+
+  /*cursor: pointer;*/
+  /*border: 1px solid var(--secondary);*/
+  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in,
+    border 0.3s;
+}
+
+/*.profile-dropdown-btn:hover {
+  background-color: var(--secondary-light-2);
+  box-shadow: var(--shadow);
+}*/
+
+.profile-img {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #cccccc;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.profile-img i {
+  position: absolute;
+  right: 0;
+  bottom: 0.3rem;
+  font-size: 0.5rem;
+  color: var(--green);
+}
+
+.profile-dropdown-btn span {
+    margin-right: 5%;
+}
+
+.logout-div{
+    position: relative;
+    width: 20%;
+    height: 20%;
+    display: flex;
+}
+.logout-div a{
+    width: 100%;
+    height: 100%;
+}
+
+.logout-div a i{
+    width: 100%;
+    height: 100%;
+    color: #1b2028;
+}
+
+.logout-div a i:hover{
+    color: rgb(132, 0, 255);
+}
+
+/*--------------------------------------------------------------------------*/
+
+.content {
+    height: 30em;
+    width: 94%;
+    overflow: hidden;
+    position: relative;
+    top: 22%;
+    left: 3%;
+    /*transform: translate(-50%, -50%);*/
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.75);
+}
+
+.content .slide img {
+    height: 100%;
+    width: 100%;
+}
+
+.navigation {
+    position: absolute;
+    bottom: 110px;
+    left: 45em;
+    display: flex;
+}
+
+.bar {
+
+    width: 15px;
+    height: 15px;
+    border: 2px solid #ffffff;
+    margin: 6px;
+    border-radius: 15px;
+    cursor: pointer;
+    transform: translateX(20%);
+
+}
+
+.text-slider{
+    background-color: rgba(255, 255, 255, 0.2);
+    position: relative;
+    align-content: center;
+    width: 98%;
+    height: 30vh;
+    bottom: 31vh;
+    left: 0px;
+}
+
+.bar:hover {
+    background-color: rgb(132, 0, 255);;
+}
+
+.input {
+  display: none;
+}
+
+.slides {
+    display: flex;
+    width: 450em;
+    height: 30em;
+}
+
+.slide {
+    width: 20%;
+    transition: .6s;
+}
+
+
+#slide1:checked ~ .s1 {
+    margin-left: 0;
+}
+
+#slide2:checked ~ .s1 {
+    margin-left: -20%;
+}
+
+#slide3:checked ~ .s1 {
+    margin-left: -40%;
+}
+
+.geral{
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+    position: relative;
+    top: 5em;
+    height: 60vh;
+    border-top: 1px solid white;
+}
+
+
+/*cartões das reviews */
+.review-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    width: 60%;
+    max-width: 200px;
+    max-height: 310px;
+    background-color: #1b2028;
+    border-radius: 16px;
+    position: relative;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    text-align: center;
+    color: #f1f3f3;
+    top: 5em;
+    right: 55em;
+
+    p{
+        font-size: smaller;
+    }
+}
+
+.review-circle {
+    background-color: rgba(230,230,230,0.2);
+	border-radius: 50%;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+	position: relative;
+	h1 {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+        color: chocolate;
+	}
+}
+
+.likes {
+    position: absolute;
+    padding-top: 15em;
+}
+
+.like-c{
+    color: rgb(128, 255, 128);
+}
+
+.like-u{
+    color: #b55bff;
+    padding-right: 0.3em;
+}
+
+.text {
+    padding-left: 6em;
+    color: white;
+}
+
+.text1 {
+    padding-bottom: 4em;
+    padding-left: 7em;
+    color: white;
+    padding-right: 7em;
+}
+
+.texto {
+    height: 4em;
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+.review-card h3 {
+    padding-top: 0.7em;
+}
+
+.show-login {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  padding: 5px 12px;
+  border: none;
+  background: #466dff;
+  border-radius: 6px;
+  cursor: pointer;
+    margin-right: 1em;
+}
+.show-login:hover {
+  background-color: #265df2;
+}
+
+.show-signup {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  padding: 5px 12px;
+  border: none;
+  background: #46b1c4;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.show-signup:hover {
+  background-color: #189bb4;
+}
+
+/*--------------------------------FOOTER------------------------*/
+
+/*footer {
+    margin-top: 5.25%;
+    height: 10%;
+    width: 100%;
+    border-top: 1px solid white;
+}*/
+
+footer {
+    margin-top: 50%;
+    height: 33%;
+    width: 100%;
+    border-top: 1px solid white;
+}
+
+.footer-div {
+    height: 100%;
+    width: 100%;
+    background-color: #1b2028;
+    display: flex;
+}
+
+.info-foot {
+    display: flex;
+    width: 23%;
+    height: 70%;
+    padding-top: 3.5%;
+    padding-left: 15%;
+    padding-bottom: 2.5%;
+}
+
+.img-foot {
+    padding-top: 2.7%;
+    padding-left: 23.5%;
+}
+
+.icons-foot {
+    width: 40%;
+    height: 100%;
+    padding-top: 3.9%;
+    padding-left: 20%;
+    display: flex;
+}

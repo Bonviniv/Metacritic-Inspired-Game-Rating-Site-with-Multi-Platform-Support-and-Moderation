@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css "/>
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/paginaInicial.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/login.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/jogo.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/jogos.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/adicionarJogo.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/addReview.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/reviews.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/perfil.css' %}?{% now "U" %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title_page %} Página Inicial {% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'site_app/images/Iscore.png' %}">
+</head>
+
+<style>
+    
+    {% block estilos %}
+    body {
+        background: #1b2028;
+    }
+
+    footer {
+        margin-top: 5.25%;
+        height: 10%;
+        width: 100%;
+        border-top: 1px solid white;
+    }
+{% endblock %}
+</style>
+<body>
+    <header>
+        <nav class="menu">
+            <img src="{% static 'site_app/images/Iscore.png' %}" class="navbar-logo" alt="logo" onclick='window.location.replace( "{% url 'paginaInicial' %}")'>
+            
+            <ul class="menu-list">
+                <li>
+                    <a href="{% url 'jogos' %}">
+                    Jogos
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reviews' %}">
+                    Reviews
+                    </a>
+                </li>
+            </ul>
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                    <div class="profile-dropdown">
+                    <div class="profile-dropdown-btn">
+                        <div style="background-position: center; background-image: url('{% static request.user.utilizador.imageurl %}');" class="profile-img">
+                            <i class="fa-solid fa-circle"></i>
+                        </div>
+                        <span>
+                            {{ request.user.username }}
+                        </span>
+    
+                        <div class="logout-div">
+                            <a href="{% url 'logout_view' %}">
+                                <i class="fa-solid fa-arrow-right-from-bracket fa-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+                {% else %}
+                    <div class="profile-dropdown">
+                    <div class="profile-dropdown-btn">
+                        <div style="background-position: center; background-image: url('{% static request.user.utilizador.imageurl %}');" onclick='window.location.replace( "{% url 'perfil' %}")' class="profile-img">
+                            <i class="fa-solid fa-circle"></i>
+                        </div>
+                        <span>
+                            {{ request.user.username }}
+                        </span>
+    
+                        <div class="logout-div">
+                            <a href="{% url 'logout_view' %}">
+                                <i class="fa-solid fa-arrow-right-from-bracket fa-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+                {% endif %}    
+            {% else %}
+                {% block login_btn %}
+                    <button onclick='window.location.replace( "{% url 'login_site' %}")'  class="show-login">Login</button>
+                {% endblock %}
+
+                {% block registar_btn %}
+                    <button onclick='window.location.replace( "{% url 'registar' %}")'  class="show-signup">Registar</button>
+                {% endblock %}
+            {% endif %}
+        </nav>
+        
+    </header>
+    
+    
+    {% block content %}
+    <h2 style="color: #eeeeee; padding-left: 2em; padding-top: 1em;">Jogos em destaque</h2>
+    <div class="content">
+        <div class="slides">
+           
+            <input class="input" type="radio" name="slide" id="slide1" checked>
+            <input class="input" type="radio" name="slide" id="slide2">
+            <input class="input" type="radio" name="slide" id="slide3">
+            
+            
+            <div class="slide s1">
+                <img  src="{% static 'site_app/images/Elden_Ring_wpp.png' %}" alt="img1">
+                <div class="text-slider">
+                    <h3 class="text">Elden Ring</h3>
+                    <p class="text1">
+                        Em Elden Ring os jogadores percorrem livremente pelo mundo aberto
+                        interativo, onde os elementos de jogabilidade incluem combate, com vários tipos
+                        de armas e feitiços mágicos, passeios a cavalo e crafting.
+                    </p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'site_app/images/god-of-war-ragnarök.jpg' %}" alt="img2">
+                <div class="text-slider">
+                    <h3 class="text">God Of War</h3>
+                    <p class="text1">
+                        Possui combate baseado em combos, bem como elementos de
+                        jogos de quebra-cabeça e RPG. A jogabilidade foi reformulada em relação
+                        ao jogo anterior: além das armas principais de Kratos, um machado de guerra
+                        mágico e suas lâminas duplas, ele também adquire uma lança mágica e seu escudo
+                        ficou mais versátil, com diferentes tipos de escudos que possuem distintas
+                        habilidades ofensivas e defensivas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'site_app/images/red-dead-redemption-2.jpg' %}" alt="img3">
+                <div class="text-slider">
+                    <h3 class="text">Red Dead Redemption 2</h3>
+                    <p class="text1">
+                        A jogabilidade é apresentada tanto em uma perspectiva em primeira
+                        quanto em terceira pessoa, com o jogador sendo livre para explorar e interagir
+                        com o mundo aberto. Elementos de jogabilidade incluem tiroteios, assaltos, caça,
+                        cavalgadas, interação com personagens não jogáveis e gerenciamento da honra do
+                        protagonista por meio de escolhas morais e atos.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <label class="bar" for="slide1"></label>
+        <label class="bar" for="slide2"></label>
+        <label class="bar" for="slide3"></label>
+    </div>
+
+    <div class="geral">
+        <div class="texto"><h2 style="color: #eeeeee; padding-left: 2em; padding-top: 1em;">Reviews em destaque</h2></div>
+
+        {% for review in lista_reviews %}
+           <article class="review-card" style="align-items: center">
+           <div class="review-circle">
+               {% if review.user.utilizador.is_cristico %}
+               <h1 style="color: rgb(128, 255, 128);" >{{ review.rating.rating_c }}</h1>
+               {% else %}
+               <h1 style="color: #b55bff">{{ review.rating.rating_u }}</h1>
+               {% endif %}
+
+           </div>
+           <h3>{{ review.user.utilizador.nome }}</h3>
+           <small class="game-name">{{ review.jogo.nome }}</small><br>
+           <p>{{ review.review }}</p>
+           <div class="likes">
+                <i class="fa-solid fa-thumbs-up like-u">  {{ review.like_u }}</i>
+                <i class="fa-solid fa-thumbs-up like-c" >  {{ review.like_c }}</i>
+           </div>
+           </article>
+        {% endfor %}
+    </div>
+
+    <script src="{% static 'site_app/scripts/carrosel.js' %}"></script>
+
+    {% endblock %}
+    {% block footer %}
+    <footer>
+        <nav class="footer-div">
+            <div class="info-foot">
+                <p style="color: #7e7e7e; padding-right: 2%">©2024</p><p style="color: white">iSCORE</p>
+            </div>
+
+            <div class="img-foot">
+                <img src="{% static 'site_app/images/Iscore.png' %}" alt="logo" width="120px" height="40px">
+            </div>
+
+            <div class="icons-foot">
+                <i class="fa-brands fa-instagram fa-2xl" style="color: white; padding-right: 6%"></i>
+                <i class="fa-brands fa-twitter fa-2xl" style="color: white; padding-right: 6%"></i>
+                <i class="fa-brands fa-facebook fa-2xl" style="color: white; padding-right: 6%"></i>
+                <i class="fa-brands fa-youtube fa-2xl" style="color: white; padding-right: 6%"></i>
+            </div>
+
+        </nav>
+    </footer>
+    {% endblock %}
+
+    <script src="{% static 'site_app/scripts/paginaInicial.js' %}"></script>
+</body>
+</html>

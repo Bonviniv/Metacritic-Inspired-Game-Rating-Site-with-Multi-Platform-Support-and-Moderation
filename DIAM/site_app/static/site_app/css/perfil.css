@@ -1,0 +1,175 @@
+.perfil-section{
+    position: absolute;
+    background-color: #1b2028;
+    left: 10%;
+    width: 80%;
+    height: 109.3%;
+    align-items: center;
+    display: flex;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.perfil-main{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.perfil-card-header{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 45%;
+}
+
+.perfil-card-image-icon{
+    position: relative;
+    left: 20%;
+    top: 10%;
+    width: 22%;
+    height: 80%;
+    border: 1px solid darkorchid;
+    border-radius: 50%;
+}
+
+.perfil-card-image-icon img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.image-upload > input {
+    display: none;
+}
+
+.image-upload i {
+    cursor: pointer;
+}
+
+.icon-img-change {
+    width: 100%;
+    height: 50%;
+    margin-top: 17%;
+}
+
+#btn-send {
+    background-color: transparent;
+    border: none;
+}
+
+/*#img-change {
+    cursor: pointer;
+    background: transparent;
+    outline: none;
+    border: none;
+    width: 10%;
+    height: 100%;
+}
+
+#img-text {
+    color: rgb(132, 0, 255);
+    font-size: 1.5em;
+}*/
+
+.perfil-card-name{
+    position: relative;
+    display: block;
+    top: 22%;
+    left: 30%;
+    width: 25%;
+    height: 15%;
+    color: white;
+    text-align: center;
+}
+
+#perfil-card-image-icon{
+    position: relative;
+}
+
+.perfil-card-dados{
+    position: relative;
+    width: 100%;
+    height: 50%;
+    border-top: 1px solid white;
+}
+
+.perfil-card-dados h2 {
+    padding-left: 10%;
+    padding-top: 5%;
+    color: white;
+}
+
+.todos-dados {
+    display: flex;
+    width: 100%;
+}
+
+.dados-perfil {
+    display: flex;
+    width: 37%;
+    padding-left: 10%;
+    padding-top: 4%;
+    color: white;
+}
+
+.dados-perfil p{
+    padding-right: 4%;
+}
+
+h2, h1, p{
+    margin-top: 0%;
+}
+
+.perfil-card-content{
+    position: relative;
+    top: 30%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.perfil-card-content p {
+    padding-top: 7%;
+}
+
+.perfil-card-ver-reviews{
+    position: relative;
+    top: 100%;
+    width: 100%;
+    height: 60%;
+    text-align: center;
+}
+
+.perfil-card-ver-reviews a {
+    color: white;
+    font-size: 90%;
+}
+
+.perfil-card-ver-reviews a:hover {
+    color: #b55bff;
+}
+
+.perfil-card-logout{
+    position: relative;
+    width: 100%;
+    height: 5%;
+    text-align: center;
+    border-top: 1px solid white;
+}
+
+.perfil-card-logout p:hover{
+    color: #b55bff;
+}
+
+.perfil-card-logout a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.perfil-card-logout p{
+    padding-top: 0.5%;
+    color: white;
+    font-size: 90%;
+}

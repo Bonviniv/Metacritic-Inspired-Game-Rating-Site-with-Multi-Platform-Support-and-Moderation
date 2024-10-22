@@ -1,0 +1,388 @@
+{% extends "paginaInicial.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css "/>
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/jogo.css' %}?{% now "U" %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title_page %}Jogo{% endblock %}</title>
+</head>
+{% block estilos %}{% endblock %}
+<body>
+
+    {% block content %}
+        
+   <div class="popUp_review" id="popUp">
+            <div onclick="hidePopUp()" class="popUp_mask_review"></div>
+            <div class="popUp_conteudo_review">
+
+                <form class="formulario-review" action= "{% url 'teste' game.id %}" method="post">
+                    <h2>Adicionar Review</h2>
+
+                    {% csrf_token %}
+                    <div class="box1">
+                        <div class="jogo-img-review">
+                            <img src="{% static game.imagem_jogo %}" alt="jogo img" width="100%" height="100%">
+                        </div>
+
+                        <div class="sub-box1">
+                            <h3 style="padding-bottom: 6%"></h3>
+
+                            <div class="plataforma-review">
+                                <label for="plataforma" style="padding-right: 5%">Plataforma:</label>
+                                <select id="plataforma" name="plataforma">
+                                {% for plataforma in lista_plataformas %}
+                                  <option value="{{ plataforma.nome }}" selected>{{ plataforma.nome }}</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rating-review-slider">
+                        <label for="rating">Rating: </label>
+                        <div class="range-slider">
+                            <span class="slider-number">0</span>
+                            <div class="input-slider">
+                                <input name="rating" type="range" class="input-rating" min="0.0" max="10.0" step="0.1" style="--webkitProgressPercentLeft: 0%; --webkitProgressPercentRight: 100%; color: #b55bff;">
+                            </div>
+                            <span class="slider-number1">5</span>
+                        </div>
+                    </div>
+
+                    <div class="review-box">
+                        <label for="review">Escrever review: </label>
+                        <textarea id="review" type="text" name="review" rows="4" cols="68" style="padding-left: 0.2em"></textarea>
+                    </div>
+
+                      {% if error_message %}
+                        <p style="color: red; font-size: small">{{ error_message }}</p>
+                      {%  endif %}
+
+                    <div class="botoes">
+                        <input type="submit" onclick="showPopUp()" id="enviar-review" value="Submeter">
+                        <input type="button" onclick="hidePopUp()" id="cancelar-review" value="Cancelar">
+                    </div>
+
+                </form>
+            </div>
+    </div>
+    <!-------------------------------------- Popup editar jogo ------------------------------------------->
+        <div class="popUp" id="popUp2">
+            <div onclick="hidePopUp2()" class="popUp_mask"></div>
+            <div class="popUp_conteudo">
+                <section class="form-section-jogo">
+                    <div class="modal-box-jogo" style="height: 95%;">
+                        <h1 style="padding-bottom: 3%">Editar Jogo</h1>
+                        <form class="form-jogo" action= "{% url 'editarJogo' game.id %}" method= "post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="info-boxes">
+                                <div id="nomeJogo">
+                                    <label for="nome">Nome do Jogo: </label>
+                                    <input type="text" name="nome" id="nome" size="20" value="{{ game.nome }}">
+                                </div>
+
+                                <div class="empresaJogo">
+                                    <label for="empresa">Empresa: </label>
+                                    <input type="text" name="empresa" id="empresa" size="20" value="{{ game.empresa }}">
+                                </div>
+                            </div>
+
+                            <div class="info-boxes">
+                                <div id="genero">
+                                    <label for="genero">Género: </label>
+                                    <input type="text" name="genero" size="20" value="{{ game.genero }}">
+                                </div>
+
+                                <div id="plataformaJogo">
+                                    <label for="plataforma">Plataformas:</label>
+                                    <div id="plataformas">
+                                        <label for="ps5">PS5</label>
+                                        <input type="checkbox" name="opcao" id="op1" value="PS5" size="20">
+                                        <label for="xbox" style="padding-left: 8%">Xbox</label>
+                                        <input type="checkbox" name="opcao" id="op2" value="XBOX" size="20">
+                                        <label for="pc" style="padding-left: 8%">PC</label>
+                                        <input type="checkbox" name="opcao" id="op2" value="PC" size="20">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <label for="dataLancamento" style="padding-left: 15%;padding-right: 8%;">Data de Lançamento: </label>
+                            <input type="date" name="dataLancamento" id="dataLancamento" size="40" value="{{ game.data_lancamento|date:'Y-m-d'}}">
+
+                            <div class="info-boxes" style="padding-top: 10%">
+                                <div class="descricaoJogo">
+                                    <label for="descricao">Descrição: </label>
+                                    <textarea id="review" type="text" name="descricao"  rows="4" cols="54" style="padding-left: 0.2em" >{{ game.descricao }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="medias">
+
+                                <div class="video">
+                                    <label for="video">Link do video:  </label>
+                                    <input type="text" name="video" id="video" size="51" value="{{ game.video_trailler }}">
+                                </div>
+                            </div>
+
+                            {% if error_message %}
+                                <p style="color: red"><strong>{{ error_message }}</strong></p>
+                            {%  endif %}
+
+                            <input type="submit" id="criar" value="Submeter">
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    <!------------------------------------ Fim------------------------------------------------------------>
+        
+    <div class="game-panel">
+        <div class="right-info">
+
+            <div class="rating-c">
+
+                <div class="rating-icon">
+                    <h1 style="color: rgb(128, 255, 128);">{{ game.rating_c }}</h1>
+                </div>
+
+                <div class="texto-rating">
+                    <h3 style="color: #1b2028;">Rating Crítico</h3>
+                </div>
+
+            </div>
+
+            <div class="rating-u">
+
+                <div class="rating-icon">
+                    <h1 style="color: #b55bff">{{ game.rating_u }}</h1>
+                </div>
+
+                <div class="texto-rating">
+                    <h3 style="color: #1b2028;">Rating Utilizador</h3>
+                </div>
+
+            </div>
+
+            <div class="escrever-review-div">
+                {% if request.user.is_authenticated %}
+                    {% if is_admin %}
+                    {% else %}
+                    <input onclick="showPopUp()"  type="button" value="Adicionar Review" name="addReview" id="btn-add-review">
+                    {% endif %}
+                {% else %}
+                    <input onclick='window.location.replace("{% url 'login_site'%}")'   type="button" value="Adicionar Review" name="addReview" id="btn-add-review">
+                {% endif %}
+            </div>
+            
+        </div>
+
+        <div class="video-div">
+            <iframe width="100%" height="100%" src="{{ game.video_trailler }}" title="YouTube video player" frameborder="0" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <div class="left-info">
+
+            <div class="info">
+
+                <div class="nome-jogo">
+                    <h1>{{ game.nome }}</h1>
+                    {% if request.user.is_authenticated %}
+                        {% if is_admin %}
+                    <div class="editar-jogo">
+                        <input onclick="showPopUp2()" type="submit" id="btn-edit-jogo"><label for="btn-edit-jogo"><i class="fa-regular fa-pen-to-square fa-lg" style="color: darkorchid;"></i></label>
+                    </div>
+
+                    <div class="apagar-jogo">
+                        <input onclick='window.location.replace("{% url 'deletarJogo' game.id %}")' type="submit" id="btn-lixo"><label for="btn-lixo"><i class="fa-solid fa-trash-can fa-lg" style="color: darkorchid;"></i></label>
+                    </div>
+                         {% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="plataformas-jogo">
+                    {% for plataforma in lista_plataformas %}
+                        <h3>{{ plataforma.nome}}</h3>
+                    {% endfor %}
+                    
+                </div>
+
+                <div class="data-lancamento">
+                    <p><b style="color: darkorchid;">Data de lançamento:</b> {{ game.data_lancamento|date:"d-m-Y" }} </p>
+                    <p><b style="color: darkorchid;">Desenvolvedor:</b> {{ game.empresa }} </p>
+                    <p><b style="color: darkorchid;">Gênero:</b> {{ game.genero }} </p>
+                </div>
+
+                <div class="descricao-jogo">
+                    <p><b style="color: darkorchid;">Descrição</b></p>
+                    <p> {{ game.descricao }} </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div style="height: 1em; background-color: #1b2028; margin-top: 26.4em"></div>
+
+    <div class="review-panel">
+
+        <div class="review-main-panel">
+            <div class="titulos" style="display: flex">
+                <div class="review-titulo">
+                    <h2>Reviews dos Críticos</h2>
+                </div>
+                <div class="review-titulo">
+                    <h2>Reviews dos Utilizadores</h2>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="review-c-div">
+
+                {% for rc in reviews_c %}
+                <div class="review-card-jogo">
+
+                    <div class="review-card-header">
+                        <div class="review-card-icon">
+                            <h2 style="color: rgb(128, 255, 128);">{{ rc.rating.rating_c }}</h2>
+                        </div>
+
+                        <div class="name-user">
+                            <h2>{{ rc.user.utilizador.nome }}</h2>
+                        </div>
+
+                        <div class="data-review">
+                            <h3>{{ rc.pub_data|date:"d-m-Y" }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="review-card-coment">
+                        <p>{{ rc.review }}</p>
+                    </div>
+
+                    <div class="review-card-footer">
+                        <div class="likes-section">
+
+                            {% if request.user.utilizador.is_cristico  %}
+                                 <i class="fa-solid fa-thumbs-up like-u" style="padding-right: 0.3em"> {{ rc.like_u }}</i>
+                                 <i onclick='window.location.replace("{% url 'avaliarReview' rc.id game.id %}")' class="fa-solid fa-thumbs-up like-c"> {{ rc.like_c }}</i>
+
+                               {%  else %}
+
+                              <i onclick='window.location.replace("{% url 'avaliarReview' rc.id game.id %}")' class="fa-solid fa-thumbs-up like-u" style="padding-right: 0.3em"> {{ rc.like_u }}</i>
+                              <i class="fa-solid fa-thumbs-up like-c"> {{ rc.like_c }}</i>
+
+                               {%  endif %}
+
+                        </div>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser or request.user == rc.user %}
+                                <div class="btn-apagar">
+                                    <button onclick='window.location.replace("{% url 'apagar_review' rc.id %}")' type="button"><b>APAGAR</b></button>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        <div class="plataforma-section" style="margin-left: 20%; margin-right: 5%">
+                            <h3>{{  rc.rating.plataforma.nome }}</h3>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+                </div>
+
+            <div class="review-u-div">
+                {% for ru in reviews_u %}
+                <div class="review-card-jogo">
+
+                    <div class="review-card-header">
+                        <div class="review-card-icon">
+                            <h2 style="color: #b55bff">{{ ru.rating.rating_u }}</h2>
+                        </div>
+
+                        <div class="name-user">
+                            <h2>{{ ru.user.utilizador.nome }}</h2>
+                        </div>
+
+                        <div class="data-review">
+                            <h3> {{ ru.pub_data|date:"d-m-Y" }}</h3>
+                        </div>
+
+                    </div>
+
+                    <div class="review-card-coment">
+                        <p>{{ ru.review }}</p>
+                    </div>
+
+                    <div class="review-card-footer">
+                         <div class="likes-section">
+
+                               {% if request.user.utilizador.is_cristico  %}
+                                 <i class="fa-solid fa-thumbs-up like-u" style="padding-right: 0.3em"> {{ ru.like_u }}</i>
+                                 <i onclick='window.location.replace("{% url 'avaliarReview' ru.id game.id %}")' class="fa-solid fa-thumbs-up like-c"> {{ ru.like_c }}</i>
+
+                               {%  else %}
+
+                              <i onclick='window.location.replace("{% url 'avaliarReview' ru.id game.id %}")' class="fa-solid fa-thumbs-up like-u" style="padding-right: 0.3em"> {{ ru.like_u }}</i>
+                              <i class="fa-solid fa-thumbs-up like-c"> {{ ru.like_c }}</i>
+
+                               {%  endif %}
+
+                         </div>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser or request.user == ru.user %}
+                                <div class="btn-apagar">
+                                    <button onclick='window.location.replace("{% url 'apagar_review' ru.id %}")' type="button"><b>APAGAR</b></button>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        <div class="plataforma-section" style="margin-left: 20%; margin-right: 5%">
+                            <h3>{{ ru.rating.plataforma.nome }}</h3>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+        
+    <script>
+         function showPopUp(){
+            let divInfo=document.getElementById("popUp");
+             divInfo.style.display = "flex";
+        }
+        function hidePopUp(){
+             let divInfo=document.getElementById("popUp");
+             divInfo.style.display = "none";
+        }
+
+        function hidePopUp2(){
+             let divInfo=document.getElementById("popUp2");
+             divInfo.style.display = "none";
+        }
+
+        function showPopUp2(){
+            let divInfo=document.getElementById("popUp2");
+             divInfo.style.display = "flex";
+        }
+        
+    </script>
+     <script src="{% static 'site_app/scripts/jogo.js' %}"></script>
+    {% endblock %}
+    <script src="{% static 'site_app/scripts/paginaInicial.js' %}"></script>
+
+</body>
+</html>

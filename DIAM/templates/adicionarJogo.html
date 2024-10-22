@@ -1,0 +1,70 @@
+{% extends "paginaInicial.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css "/>
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/paginaInicial.css' %}?{% now "U" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/login.css' %}?{% now "U" %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title_page %} Adicionar Jogo {% endblock %}</title>
+</head>
+<body>
+    {% block login_btn %}
+        <button onclick='window.location.replace( "{% url 'login_site' %}")'  class="show-login">Login</button>
+    {% endblock %}
+    
+    {% block content %}
+        <section class="form-section">
+        
+              <div class="modal-box">
+                <h1>Registar</h1>
+                  
+                  <form action= "{% url 'gravarJogo'  %}" method= "post">
+                    {% csrf_token %}
+                  
+                    <label for="nome">Nome do Jogo: </label>
+                    <input type="text" name="nome" id="nome" size="20">
+                    <br>
+                  
+                    <label for="empresa">Empresa: </label>
+                    <input type="text" name="empresa" id="empresa" size="20">
+                    <br>
+                  
+                    <label for="genero">Género: </label>
+                    <input type="text" name="genero" id="genero" size="20">
+                    <br>
+                  
+                    <label for="descricao">Descrição: </label>
+                    <input type="text" name="descricao" id="descricao" size="20">
+                    <br>
+                  
+                    <label for="dataLancamento">Data de Lançamento: </label>
+                    <input type="date" name="dataLancamento" id="dataLancamento" size="20">
+                    <br>
+                    
+                    <label for="plataforma">Plataformas</label>
+                    <label for="ps5">PS5</label>
+                    <input type="checkbox" name="opcao" id="op1" value="ps5" size="20">
+                    <label for="xbox">Xbox</label>
+                    <input type="checkbox" name="opcao" id="op2" value="xbox" size="20">
+                    <label for="pc">PC</label>
+                    <input type="checkbox" name="opcao" id="op2" value="pc" size="20">
+                    <br><br>
+                  
+                      {% if error_message %}
+                        <p style="color: red"><strong>{{ error_message }}</strong></p>
+                      {%  endif %}
+                  
+                    <input type="submit" value="Criar">
+        
+                  </form>
+              </div>
+        </section>
+    {% endblock %}
+    <script src="{% static 'site_app/scripts/paginaInicial.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+{% extends "paginaInicial.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/jogos.css' %}?{% now "U" %}">
+
+    <title>{% block title_page %}Reviews{% endblock %}</title>
+</head>
+{% block estilos %}{% endblock %}
+<body>
+
+    {% block content %}
+
+    <div class="jogos-div">
+        <div class="jogos-title">
+            <h1>Reviews</h1>
+        </div>
+
+        <div class="popUp" id="popUp">
+            <div onclick="hidePopUp()" class="popUp_mask"></div>
+            <div class="popUp_conteudo">
+                <section class="form-section-jogo">
+                    <div class="modal-box-jogo" style="height: 95%;">
+                        <h1 style="padding-bottom: 3%">Adicionar Novo Jogo</h1>
+
+                        <form class="form-jogo" action= "{% url 'gravarJogo' %}" method= "post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="info-boxes">
+                                <div id="nomeJogo">
+                                    <label for="nome">Nome do Jogo: </label>
+                                    <input type="text" name="nome" id="nome" size="20">
+                                </div>
+
+                                <div class="empresaJogo">
+                                    <label for="empresa">Empresa: </label>
+                                    <input type="text" name="empresa" id="empresa" size="20">
+                                </div>
+                            </div>
+
+                            <div class="info-boxes">
+                                <div id="genero">
+                                    <label for="genero">Género: </label>
+                                    <input type="text" name="genero" size="20">
+                                </div>
+
+                                <div id="plataformaJogo">
+                                    <label for="plataforma">Plataformas:</label>
+                                    <div id="plataformas">
+                                        <label for="PS5">PS5</label>
+                                        <input type="checkbox" name="opcao" id="op1" value="PS5" size="20">
+                                        <label for="Xbox" style="padding-left: 8%">Xbox</label>
+                                        <input type="checkbox" name="opcao" id="op2" value="XBOX" size="20">
+                                        <label for="PC" style="padding-left: 8%">PC</label>
+                                        <input type="checkbox" name="opcao" id="op2" value="PC" size="20">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <label for="dataLancamento" style="padding-left: 15%;padding-right: 8%;">Data de Lançamento: </label>
+                            <input type="date" name="dataLancamento" id="dataLancamento" size="40">
+
+                            <div class="info-boxes" style="padding-top: 10%">
+                                <div class="descricaoJogo">
+                                    <label for="descricao">Descrição: </label>
+                                    <input type="text" name="descricao" id="descricao" size="51" style="height: 70px">
+                                </div>
+                            </div>
+
+                            <div class="medias">
+                                <div class="imagem">
+                                    <label for="imagem">Imagem: </label>
+                                    <input id="imagem" type="file" name="imagem">
+                                </div>
+
+                                <div class="video">
+                                    <label for="video">Link do video:  </label>
+                                    <input type="text" name="video" id="video" size="51">
+                                </div>
+                            </div>
+
+                            {% if error_message %}
+                                <p style="color: red"><strong>{{ error_message }}</strong></p>
+                            {%  endif %}
+
+                            <input type="submit" id="criar" value="Submeter">
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    <div class="jogos-main-content">
+            <aside class="jogos-search">
+              <div class="search-bar">
+                    <form action= "{% url 'review_view_filtrado_pesquisar'  %}" method= "post" style="display: flex" >
+                        {% csrf_token %}
+                        <input type="text" name="pesquisar" id="pesquisar">
+                        <button class="lupa" type="submit" value="Reset">
+                            <img src="{% static 'site_app/images/lupa.png' %}" alt="pesquisar" border="0" width="25px" height="25px">
+                        </button>
+                    </form>
+                </div>
+                <div class="jogos-search-title">
+                    <h1>Filtros</h1>
+                </div>
+                
+                <!-- <form class="form-pesquisa" action= url 'jogos_view_filtrado' method= "post" > -->    
+                 <form class="form-pesquisa" action= "{% url 'review_view_filtrado'  %}" method= "post" >
+                    {% csrf_token %}
+                <div class="filtro-ano-lancamento">
+                   
+                    <!-- <h3>Ano de Lançamento</h3> -->
+                    <h3>Ano de publicação</h3> 
+                   
+                    <div class="year-range">
+                        <div class="min-year">
+                            <p class="label-year">De: </p>
+                            <input type="number" class="year" name ="min_year" id="min_year">
+                        </div>
+                        <div class="max-year">
+                            <p class="label-year">Até: </p>
+                            <input type="number" class="year" name ="max_year" id="max_year">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filtro-platformas" style="height: 25%;">
+                    <h3>Plataformas</h3>
+                    <input type="checkbox" name="opcao" id="op1" value="PS5">
+                    <label for="ps5">PS5</label><br>
+                    <input type="checkbox" name="opcao" id="op2" value="XBOX">
+                    <label for="XBOX">Xbox</label><br>
+                    <input type="checkbox" name="opcao" id="op3" value="PC">
+                    <label for="PC">PC</label>
+                </div>
+                <div class="filtro-genero" style="height: 25%;">
+                    <h3>Gênero</h3>
+                    <input type="checkbox" name="opcaoG" id="opc1" value="RPG">
+                    <label for="RPG">RPG</label><br>
+                    <input type="checkbox" name="opcaoG" id="opc1" value="Terror">
+                    <label for="Terror">Terror</label><br>
+                    <input type="checkbox" name="opcaoG" id="opc1" value="Desporto">
+                    <label for="Desporto">Desporto</label>
+                </div>
+                  
+                 <!-- add -->    
+                 <div class="filtro-genero" style="height: 20%;">
+                    <h3>Tipo de user</h3>
+                    <input type="checkbox" name="opcaoU" id="opc1" value="user">
+                    <label for="user">user</label><br>
+                    <input type="checkbox" name="opcaoU" id="opc1" value="critico">
+                    <label for="critico">critico</label><br>
+                </div>
+
+                 <div class="rating-review-slider">
+                        <label for="ratingU">Rating Users: </label>
+                        <div class="range-slider">
+                            <span class="slider-number">0</span>
+                            <div class="input-slider">
+                                <input id ="ratingU" name="ratingU" type="range" class="input-rating" min="0.0" max="10.0" step="0.1" style="--webkitProgressPercentLeft: 0%; --webkitProgressPercentRight: 100%; color: #b55bff;">
+                            </div>
+                            <span class="slider-number1">5</span>
+                        </div>
+                 </div>
+
+                 <div class="rating-review-slider">
+                     <label for="ratingC">Rating Critico: </label>
+                     <div class="range-slider">
+                         <span class="slider-number">0</span>
+                         <div class="input-slider">
+                             <input id ="ratingC" name="ratingC" type="range" class="input-rating2" min="0.0" max="10.0" step="0.1" style="--webkitProgressPercentLeft: 0%; --webkitProgressPercentRight: 100%; color: #b55bff;">
+                         </div>
+                         <span class="slider-number2">5</span>
+                     </div>
+                 </div>
+                     
+                 <script src="{% static 'site_app/scripts/jogo.js' %}"></script>
+                 <script src="{% static 'site_app/scripts/review.js' %}"></script>
+                     
+                <!-- add  -->      
+
+                <div class="buttons_filters">
+                    <button type="submit" value="Submit" id="submit" >Submit</button>
+                    <button type="reset" value="Reset" id="reset" style="margin-bottom: 20%">Reset</button>
+                </div>
+                </form>
+            </aside>
+
+
+            <div class="jogos-grid-main">
+
+                <div class="reviews-grid">
+                <!-- Por a review aqui -->
+                {% for rc in reviews %}
+                <div class="review-card-jogo" style="height: 100%; top:2%; width: 100%; left: 0%;">
+
+                    <div class="review-card-header">
+                        <div class="review-card-icon" style="height: 80%;">
+                        
+                        <!-- add -->
+                            {% if rc.user.utilizador.is_cristico  %}
+                            <h2 style="color: rgb(128, 255, 128); margin-top: 16%;">{{ rc.rating.rating_c }}</h2>
+                             {%  else %}
+                            <h2 style="color: #b55bff; margin-top: 16%;">{{ rc.rating.rating_u }}</h2>
+                            {%  endif %}
+                        
+                        </div>
+
+                        <div class="name-user" style="top:10%;">
+                            <h2>{{ rc.user.utilizador.nome }}</h2>
+
+                            <div class="name-game">
+                                <p>sobre</p>
+                                <a href="{% url 'jogo' rc.jogo.id %}"><b>{{ rc.jogo.nome }}</b></a>
+                            </div>
+                        </div>
+
+                        <div class="data-review">
+                            <h3>{{ rc.pub_data|date:"d-m-Y" }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="review-card-coment">
+                        <p>{{ rc.review }}</p>
+                    </div>
+
+                    <div class="review-card-footer">
+                        <div class="likes-section" style="padding-top: 0.5%;">
+                        
+                            {% if request.user.utilizador.is_cristico  %}
+                                 <i class="fa-solid fa-thumbs-up like-u" style="padding-right: 0.3em"> {{ rc.like_u }}</i>
+                                 <i  class="fa-solid fa-thumbs-up like-c"> {{ rc.like_c }}</i>
+                                   
+                               {%  else %}
+                        
+                              <i  class="fa-solid fa-thumbs-up like-u" style="padding-right: 0.3em"> {{ rc.like_u }}</i>
+                              <i class="fa-solid fa-thumbs-up like-c"> {{ rc.like_c }}</i>
+                                   
+                               {%  endif %}
+                    
+                        </div>
+                        <div class="plataforma-section" style="margin-left: 35%">
+                            <h3 style="padding-top: 0%;">{{  rc.rating.plataforma.nome }}</h3>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+                <!-- Fim -->
+                </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endblock %}
+</body>
+</html>

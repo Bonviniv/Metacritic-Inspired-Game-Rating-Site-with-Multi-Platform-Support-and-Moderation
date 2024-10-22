@@ -1,0 +1,107 @@
+{% extends "paginaInicial.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'site_app/css/perfil.css' %}?{% now "U" %}">
+
+    <title>{% block title_page %}Perfil{% endblock %}</title>
+</head>
+{% block estilos %}{% endblock %}
+<body>
+    {% block content %}
+    <div class="perfil-section">
+
+        <div class="perfil-main">
+
+            <div class="perfil-card-header">
+                <div class="perfil-card-image-icon">
+                    <span id="perfil-card-image-icon">
+                        {% if utilizador.imageurl %}
+                            <img src="{% static utilizador.imageurl %}" alt="user-image" style="object-fit: cover;">
+                        {% else %}
+                            <img src= "#" alt="user-image">
+                        {% endif %}
+                    </span>
+                </div>
+
+             
+                <div class="perfil-card-name">
+                    <h1>Olá {{ utilizador.nome }}</h1>
+
+                    <div class="perfil-card-content">
+                        <i class="fa-solid fa-thumbs-up like-u" style="padding-right: 4%;"> {{ likes_u}} </i>
+                        <i class="fa-solid fa-thumbs-up like-c"> {{ likes_c}}</i>
+                        <p>Número de reviews: {{ reviews}}</p>
+                    </div>
+                    <div class="perfil-card-ver-reviews">
+                        <a href="{% url 'review_view_filtrado_perfil' %}">
+                            <p>Ver Todas Reviews</p>
+                        </a>
+                    </div>
+                    <div class="icon-img-change">
+                        <form class="form-jogo" action= "{% url 'upload_profilepic' %}" method= "post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="image-upload">
+                                <input id="file-input" name="user-image" type="file"/><label for="file-input">
+                                    <i class="fa-solid fa-camera fa-xl" style="color: darkorchid;"></i></label>
+                                <input type="submit" id="btn-send"><label for="btn-send"><i class="fa fa-arrow-circle-right fa-lg" style="color: darkorchid;"></i></label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="perfil-card-dados">
+                <h2>Dados do Utilizador</h2>
+
+                <div class="todos-dados">
+                    <div class="dados-perfil">
+                        <p>Nome de utilizador:</p>
+                        {{ utilizador.user }}
+                    </div>
+                    <div class="dados-perfil">
+                        <p>E-mail:</p>
+                        {{ utilizador.email }}
+                    </div>
+                </div>
+                <div class="todos-dados">
+                    <div class="dados-perfil">
+                        <p>Data de nascimento:</p>
+                        {{ utilizador.data_nascimento }}
+                    </div>
+                    <div class="dados-perfil">
+                        <p>Crítico?</p>
+                        {% if utilizador.is_cristico %}
+                            <p>Sim</p>
+                        {% else %}
+                            <p>Não</p>
+                        {% endif %}
+                    </div>
+                    {% if utilizador.is_cristico %}
+                        <div class="dados-perfil">
+                                <p>Empresa:</p>
+                                {{ utilizador.empresa }}
+                        </div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+         
+
+            <div class="perfil-card-logout">
+                <a href="{% url 'logout_view' %}">
+                    <p>Logout</p>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    {% endblock %}
+</body>
+</html>
