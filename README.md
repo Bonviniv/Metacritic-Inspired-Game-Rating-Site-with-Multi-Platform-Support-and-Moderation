@@ -1,2 +1,32 @@
-﻿# Metacritic-Inspired Game Rating Site with Multi-Platform Support and Moderation
-This project aimed to recreate a platform similar to **Metacritic**, focusing on **game reviews**. The site allows users to review games, rate existing reviews, and manage their profiles. There are three types of users: **regular users**, who can post and evaluate reviews; **critics**, who have their own section for expert reviews; and **administrators**, responsible for managing game data and moderating content. Each game can be rated across different platforms, offering a versatile rating system, and users can interact by liking reviews. The goal was to develop a comprehensive game review site with a user-friendly experience.
+# Metacritic-Inspired Game Rating Site with Multi-Platform Support and Moderation
+
+A full-featured game review platform inspired by **Metacritic**, supporting user interaction, moderation, and multi-platform ratings.
+
+## 🧩 Project Overview
+- Users can write reviews, rate games, and evaluate others' reviews
+- Games can be reviewed and rated **per platform** (e.g., PS5, Xbox, PC)
+- The system promotes **community interaction** via likes on reviews
+
+## 👥 User Roles
+- **Regular Users**: Create and rate reviews
+- **Critics**: Have a dedicated section for expert reviews
+- **Administrators**: Manage content, games, and enforce moderation
+
+## ✨ Key Features
+- Platform-specific rating system
+- Review evaluation through likes
+- Profile management for all users
+- Separate sections for critics and public reviews
+
+## 🛡️ Moderation & Management
+- Admins oversee content quality and game data
+- Built-in moderation tools ensure community standards
+
+## 🎯 Goals
+- Deliver a polished, user-friendly review platform
+- Encourage both casual and expert contributions
+- Offer multi-platform rating flexibility
+
+---
+
+A robust review ecosystem tailored for gamers, critics, and moderators alike.
